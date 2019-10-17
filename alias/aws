@@ -3,7 +3,7 @@
 AWS_CLI_PATH="${_AWS_VAULT_CLI_PATH:-$(command -v aws)}"
 
 if hash "aws-vault"; then
-  aws-vault exec "${AWS_PROFILE}" -- "${AWS_CLI_PATH}" "${@}"
+  aws-vault exec "${BUILDKITE_PLUGIN_AWS_VAULT_PROFILE}" -- "${AWS_CLI_PATH}" "${@}"
 else
   "${AWS_CLI_PATH}" "${@}"
 fi
