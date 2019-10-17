@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+# Only use alias if have aws-vault installed
+if ! hash aws-vault; then
+  exit 0;
+fi
+
+# Get absolute root path
+abs_dir() {
+  cd "${1%/*}"; link=$(readlink "${1##*/}");
+  if [ -z "${link}" ]; then pwd; else abs_dir "${link}"; fi
+}
+
+# Expect bin ops in ./ops/bin folder
+_SOURCE=${BASH_SOURCE:-$0}
+_AWS_VAULT_PLUGIN_DIR=$(cd "$(abs_dir "${_SOURCE}")/.."; pwd)
+_AWS_VAULT_CLI_PATH=$(command -v aws)
+
+export _AWS_VAULT_CLI_PATH
+export PATH="${_AWS_VAULT_PLUGIN_DIR}/alias:${PATH}"

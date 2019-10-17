@@ -1,0 +1,12 @@
+name: aws-vault
+description: Use aws-vault to connect aws api
+author: https://github.com/nuxlli
+requirements:
+  - bash
+  - aws
+configuration:
+  properties:
+    profile:
+      type: string
+  required:
+    - profile
